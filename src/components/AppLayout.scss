@@ -1,0 +1,131 @@
+.app {
+  --bg: #eef2f7;
+  --surface: #ffffff;
+  --surface-alt: #dce4ef;
+  --text: #1e2a3a;
+  --text-muted: #5a6a7e;
+  --accent: #2563eb;
+  --border: #c5d1e0;
+
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.app.dark {
+  --bg: #0f1520;
+  --surface: #172032;
+  --surface-alt: #1e2d44;
+  --text: #e2eaf5;
+  --text-muted: #7a8fa8;
+  --accent: #4d8ef0;
+  --border: #263450;
+}
+
+.layout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.site-nav {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.nav-link {
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background-color: var(--surface-alt);
+}
+
+.nav-link.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.logout-btn {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+}
+
+.logout-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-btn {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+}
+
+.site-main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.site-footer {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}

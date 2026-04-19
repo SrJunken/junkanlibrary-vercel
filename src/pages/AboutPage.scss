@@ -1,0 +1,61 @@
+.about-page {
+  max-width: 860px;
+}
+
+.about-page h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.about-lead {
+  color: var(--text-muted);
+  margin: 0 0 2rem;
+}
+
+.about-lead a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.about-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.about-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.about-card p,
+.about-card ul {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.7;
+}
+
+.about-card ul {
+  padding-left: 1.2rem;
+}
+
+.about-card code {
+  font-family: monospace;
+  font-size: 0.85rem;
+  background: var(--surface-alt);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  color: var(--accent);
+}
