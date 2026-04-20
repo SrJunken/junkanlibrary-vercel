@@ -1,119 +1,220 @@
-# Book Dashboard - React Application
+# Junkan Library
 
-A simple book search dashboard built with React, TypeScript, and SCSS. Search for books using the OpenLibrary API, view results in a responsive grid, and switch between light and dark themes.
+A book search app built with React, TypeScript, SCSS and Redux Toolkit. Search for any book using the Open Library API, view details, and switch between light and dark themes. Authentication is handled by a separate ASP.NET Core backend.
 
----
-
-![alt text](image-2.png)
-
+**Live app:** https://junkanlibrary-vercel.vercel.app
 
 ---
 
-## How to Run
+## Screenshots
 
-Prerequisites: Node.js 18 or higher and pnpm (or npm).
+<!-- Screenshot: home page -->
+![alt text](image-24.png)
+<!-- Screenshot: search results -->
+![alt text](image-25.png)
+<!-- Screenshot: dark mode -->
+![alt text](image-26.png)
+---
 
-```bash
-pnpm install
-pnpm run dev
-```
+## Tech Stack
 
-Open http://localhost:5173 in your browser. If you don't have pnpm, use `npm install` and `npm run dev` instead.
+- React 19 + TypeScript
+- Redux Toolkit — global state management
+- React Router v6 — routing and navigation
+- SCSS — styling with CSS variables for theming
+- Vitest + React Testing Library — unit and integration tests
+- Vite — build tool
+- ASP.NET Core (JunkanBackend) — authentication API
+
+---
+
+## Features
+
+- Search millions of books via the Open Library API
+- Book detail pages with cover, description and subjects
+- Light and dark theme toggle, persisted across routes
+- User registration and login with JWT authentication
+- Protected routes — search and detail pages require login
+- Search state persists when navigating between pages
+- Lazy loaded routes for faster initial load
+- 13 unit and integration tests
+
+---
+
+## Live Links
+
+| | URL |
+|---|---|
+| Frontend | https://junkanlibrary-vercel.vercel.app |
+| Backend | https://junkanbackend-production.up.railway.app |
+| Backend repo | https://github.com/your-username/JunkanBackend |
 
 ---
 
 ## Project Structure
 
-The project is now organized into pages, components, context, and hooks:
-
-- `src/components/AppLayout.tsx`: shared layout with the navigation bar, rendered on every page using React Router's `<Outlet />`.
-- `src/components/BookCard.tsx`: displays a single book with cover, title, and author. Clicking it navigates to the detail page.
-- `src/components/BookList.tsx`: renders a grid of BookCard components.
-- `src/pages/HomePage.tsx`: landing page with a short description and quick-search chips.
-- `src/pages/SearchPage.tsx`: search form and results list. Keeps the search term in the URL.
-- `src/pages/BookDetailPage.tsx`: shows full details for a single book, loaded from the URL parameter.
-- `src/pages/AboutPage.tsx`: project information page. Loaded lazily for code splitting.
-- `src/context/ThemeContext.ts`: defines the context object and its types.
-- `src/context/ThemeProvider.tsx`: holds the theme state and exposes `toggleTheme` to the rest of the app.
-- `src/context/useTheme.ts` custom hook to consume the theme context from any component.
-- `src/hooks/useFetch.ts`: generic data-fetching hook used by SearchPage and BookDetailPage.
-- `src/types/`: TypeScript interfaces for book data.
+```
+src/
+├── store/
+│   ├── index.ts            — Redux store
+│   ├── authSlice.ts        — login, register, logout
+│   ├── searchSlice.ts      — search query and results
+│   └── themeSlice.ts       — light/dark mode
+├── hooks/
+│   ├── useFetch.ts         — generic data fetching hook
+│   └── useRedux.ts         — typed useAppSelector / useAppDispatch
+├── context/
+│   ├── ThemeContext.ts
+│   ├── ThemeProvider.tsx
+│   └── useTheme.ts
+├── components/
+│   ├── AppLayout.tsx       — shared layout with nav bar
+│   ├── BookCard.tsx
+│   ├── BookList.tsx
+│   └── ProtectedRoute.tsx  — redirects to /login if no token
+├── pages/
+│   ├── HomePage.tsx
+│   ├── SearchPage.tsx
+│   ├── LoginPage.tsx
+│   ├── RegisterPage.tsx
+│   ├── BookDetailPage.tsx
+│   └── AboutPage.tsx
+└── test/
+    ├── setup.ts
+    └── testUtils.tsx       — shared Redux + Router wrapper for tests
+```
 
 ---
 
 ## Routing
 
-The app uses React Router v6 with a nested route structure. `AppLayout` is the parent route and wraps all pages, so the navigation bar is always visible. The routes are:
-
-| Path | Page | Notes |
+| Path | Page | Auth required |
 |---|---|---|
-| `/` | HomePage | Landing page |
-| `/search` | SearchPage | Book search |
-| `/search/:initialSearchTerm` | SearchPage | Search with pre-filled query from URL |
-| `/books/:bookId` | BookDetailPage | Dynamic route — `bookId` maps to an Open Library work ID |
-| `/about` | AboutPage | Lazy loaded |
-
-
-![alt text](image-3.png)
-
-![alt text](image-4.png)
-
-
-The dynamic route `/books/:bookId` receives the work ID as a URL parameter (for example `/books/OL45804W`) and fetches the book details from the API using that value.
-
-http://localhost:5173/books/OL498556W
-
-![alt text](image.png)
+| `/` | Home | No |
+| `/login` | Login | No |
+| `/register` | Register | No |
+| `/about` | About | No |
+| `/search` | Search | Yes |
+| `/search/:initialSearchTerm` | Search with pre-filled query | Yes |
+| `/books/:bookId` | Book detail | Yes |
 
 ---
 
-## State Management — ThemeContext
+## Getting Started
 
-Theme state (light/dark) is managed globally with React Context so any page can read or toggle it without prop drilling. The logic is split across three files: `ThemeContext.ts` creates the context, `ThemeProvider.tsx` wraps the app and holds the state, and `useTheme.ts` is the hook used to consume it. The root `App.tsx` wraps everything inside `<ThemeProvider>`.
+### Prerequisites
 
-![alt text](image-1.png)
+- Node.js 18 or higher
+- pnpm
+- The JunkanBackend API running (see below)
 
----
+### Installation
 
-## Custom Hook — useFetch
+```bash
+git clone https://github.com/SrJunken/JunkanLibrary.git
+cd JunkanLibrary
+pnpm install
+```
 
-`useFetch<T>(url)` is a generic hook that accepts a URL string and returns `{ data, isLoading, error }`. It handles the fetch, loading state, and error catching internally. Passing `null` as the URL skips the fetch entirely, which is useful when a search term is empty. Both `SearchPage` and `BookDetailPage` use this hook instead of writing fetch logic directly in the component.
+### Environment variables
 
-![alt text](image-5.png)
+Create a `.env` file in the root of the project:
 
+```
+VITE_API_URL=http://localhost:5000
+```
 
----
+For production this is set as an environment variable in Vercel pointing to the Railway backend URL.
 
-## Performance — Lazy Loading
+### Run in development
 
-`AboutPage` and `BookDetailPage` are imported with `React.lazy()` in `App.tsx`. This means their code is split into separate bundles and only downloaded by the browser when the user navigates to those routes for the first time.
+```bash
+pnpm run dev
+```
 
-```tsx
-const AboutPage = lazy(() => import('./pages/AboutPage'))
-const BookDetailPage = lazy(() => import('./pages/BookDetailPage'))
+Open http://localhost:5173 in your browser.
+
+### Run tests
+
+```bash
+pnpm test
+```
+
+### Build for production
+
+```bash
+pnpm build
 ```
 
 ---
 
-## Previous Parts
+## Backend Setup (JunkanBackend)
 
-Components and Props (Part 1)
-`SearchContainer` passes the `books` array down to `BookList` via props. `BookList` maps through it and renders a `BookCard` for each entry. Data flows unidirectionally from parent to child.
+The backend is a separate ASP.NET Core minimal API that handles authentication.
 
-State and Events (Part 2)
-`SearchBar` uses `useState` to manage its input as a controlled component. On submit, it calls `e.preventDefault()`, validates the input, passes the value up to the parent via `onSearch`, and clears itself.
+```bash
+git clone https://github.com/SrJunken/JunkanBackend.git
+cd JunkanBackend
+dotnet restore
+dotnet run
+```
 
-Side Effects and Rendering (Part 3)
-`SearchContainer` used `useEffect` to fetch from the OpenLibrary API whenever `searchTerm` changed. That logic has been moved into the `useFetch` hook but works the same way: loading state is set before the fetch, cleared after, and the UI renders conditionally based on the current state.
+The API runs on http://localhost:5000 by default.
+
+**Required environment variables for production (Railway):**
+
+```
+Jwt__Key=your-long-secret-key
+Jwt__Issuer=junkan-api
+Jwt__Audience=junkan-client
+Jwt__ExpiryMinutes=60
+ASPNETCORE_URLS=http://+:8080
+```
+
+**Endpoints:**
+
+| Method | Path | Description | Auth |
+|---|---|---|---|
+| POST | `/auth/register` | Create a new user | No |
+| POST | `/auth/login` | Returns a JWT token | No |
+| GET | `/me` | Returns current user info | Yes |
 
 ---
 
-## API Used
+## Authentication Flow
 
-OpenLibrary — public API, no authentication required.
+1. User submits email and password on LoginPage
+2. Frontend dispatches the `login` thunk — POSTs to `/auth/login`
+3. Backend verifies the password hash with BCrypt and returns a signed JWT
+4. Token is saved in the Redux store and in `localStorage`
+5. Protected routes check `state.auth.token` via `ProtectedRoute`
+6. Logout clears the token from the store and `localStorage`
 
-Search: `https://openlibrary.org/search.json?q={query}&limit=20`
+---
 
-Book detail: `https://openlibrary.org/works/{bookId}.json`
+## Tests
 
-Covers: `https://covers.openlibrary.org/b/id/{coverId}-M.jpg`
+13 tests total, written with Vitest and React Testing Library. `fetch` is mocked with `vi.fn()` so no real network calls are made.
+
+| File | Tests |
+|---|---|
+| `LoginPage.test.tsx` | form renders, redirects on success, shows error on bad credentials |
+| `ProtectedRoute.test.tsx` | renders children with token, redirects without token |
+| `BookCard.test.tsx` | shows title/author, cover image, emoji fallback, navigates on click |
+| `useFetch.test.ts` | loading state, success, HTTP error, null URL, network failure |
+
+---
+
+## API
+
+Open Library — free public API, no authentication required.
+
+- Search: `https://openlibrary.org/search.json?q={query}&limit=20`
+- Book detail: `https://openlibrary.org/works/{bookId}.json`
+- Covers: `https://covers.openlibrary.org/b/id/{coverId}-M.jpg`
+
+---
+
+## License
+
+MIT
