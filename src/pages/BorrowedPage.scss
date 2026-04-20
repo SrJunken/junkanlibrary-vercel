@@ -1,0 +1,150 @@
+.borrowed-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.borrowed-header {
+  margin-bottom: 2rem;
+}
+
+.borrowed-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.borrowed-stats {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.browse-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.borrowed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.borrowed-item {
+  display: flex;
+  gap: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.borrowed-item:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.borrowed-cover {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.borrowed-no-cover {
+  width: 80px;
+  height: 120px;
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 6px;
+}
+
+.borrowed-info {
+  flex: 1;
+}
+
+.borrowed-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 0.25rem;
+}
+
+.borrowed-author {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.borrowed-dates {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.borrowed-date,
+.due-date {
+  color: var(--text-muted);
+}
+
+.due-date.overdue {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.returned-badge {
+  display: inline-block;
+  background: var(--success, #28a745);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .borrowed-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .borrowed-cover,
+  .borrowed-no-cover {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+  }
+}

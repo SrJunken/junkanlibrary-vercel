@@ -24,7 +24,10 @@ export default function AppLayout() {
           <nav className="site-nav">
             <NavLink to="/" end className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink>
             {token && (
-              <NavLink to="/search" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Search</NavLink>
+              <>
+                <NavLink to="/search" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Search</NavLink>
+                <NavLink to="/borrowed" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>My Books</NavLink>
+              </>
             )}
             <NavLink to="/about" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About</NavLink>
           </nav>
@@ -37,7 +40,7 @@ export default function AppLayout() {
             ) : (
               <button className="logout-btn" onClick={() => navigate('/login')}>Login</button>
             )}
-            
+
             <button onClick={() => dispatch(toggleTheme())} className="theme-btn">
               {theme === 'light' ? '🌙' : '☀️'}
             </button>

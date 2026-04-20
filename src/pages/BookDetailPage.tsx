@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { useFetch } from '../hooks/useFetch'
+import BorrowButton from '../components/BorrowButton'
 import './BookDetailPage.scss'
 
 interface BookDetail {
@@ -8,6 +9,7 @@ interface BookDetail {
   subjects?: string[]
   covers?: number[]
   first_publish_date?: string
+  authors?: Array<{ key: string; name?: string }>
 }
 
 export default function BookDetailPage() {
@@ -25,6 +27,9 @@ export default function BookDetailPage() {
   const coverUrl = data?.covers?.[0]
     ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-L.jpg`
     : null
+
+  const authorName = data?.authors?.[0]?.name || 'Unknown Author'
+
 
   return (
     <div className="book-detail-page">
@@ -64,6 +69,14 @@ export default function BookDetailPage() {
                 ))}
               </div>
             )}
+            <div style={{ marginTop: '1rem' }}>
+              <BorrowButton
+                bookId={bookId!}
+                title={data.title}
+                author={authorName}
+                coverId={data.covers?.[0]}
+              />
+            </div>
           </div>
         </div>
       )}

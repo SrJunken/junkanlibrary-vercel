@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import SearchPage from './pages/SearchPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import BorrowedPage from './pages/BorrowedPage'
 
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const BookDetailPage = lazy(() => import('./pages/BookDetailPage'))
@@ -38,6 +39,11 @@ export default function App() {
           <Route path="/books/:bookId" element={
             <ProtectedRoute><BookDetailPage /></ProtectedRoute>
           } />
+
+          <Route path="/borrowed" element={
+            <ProtectedRoute><BorrowedPage /></ProtectedRoute>
+          } />
+
 
           <Route path="*" element={
             <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>

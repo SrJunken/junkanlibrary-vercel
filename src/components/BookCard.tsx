@@ -1,13 +1,16 @@
+// src/components/BookCard.tsx (Updated)
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Book } from '../types/book'
+import BorrowButton from './BorrowButton'
 import './BookCard.scss'
 
 interface BookCardProps {
   book: Book
+  showBorrowButton?: boolean
 }
 
-export default memo(function BookCard({ book }: BookCardProps) {
+export default memo(function BookCard({ book, showBorrowButton = false }: BookCardProps) {
   const navigate = useNavigate()
   const title = book.title || 'No Title'
   const author = book.author_name?.join(', ') ?? 'Unknown Author'
@@ -37,6 +40,16 @@ export default memo(function BookCard({ book }: BookCardProps) {
       <div className="book-info">
         <h3 className="book-title">{title}</h3>
         <p className="book-author">{author}</p>
+        {showBorrowButton && workId && (
+          <div style={{ marginTop: '0.75rem' }} onClick={(e) => e.stopPropagation()}>
+            <BorrowButton
+              bookId={workId}
+              title={title}
+              author={author}
+              coverId={book.cover_i}
+            />
+          </div>
+        )}
       </div>
     </div>
   )

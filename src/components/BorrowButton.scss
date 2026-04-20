@@ -1,0 +1,38 @@
+.borrow-button {
+  padding: 0.6rem 1.25rem;
+  background: var(--success, #28a745);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.borrow-button:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.borrow-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.borrow-button.borrowed {
+  background: #ffc107;
+  color: #333;
+}
+
+.borrow-button.borrowed:hover:not(:disabled) {
+  background: #e0a800;
+}
+
+.return-button {
+  background: #6c757d;
+}
+
+.return-button:hover:not(:disabled) {
+  background: #5a6268;
+}
